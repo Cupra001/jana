@@ -1,119 +1,927 @@
-let player;
-
-// تهيئة مشغل اليوتيوب
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-audio-player', {
-        height: '0',
-        width: '0',
-        videoId: '31qYeEsoClw', // معرف الأغنية - غيره إذا بتريد أغنية ثانية
-        playerVars: {
-            'start': 45,
-            'controls': 0,
-            'disablekb': 1,
-            'modestbranding': 1,
-            'rel': 0,
-            'autoplay': 0
-        },
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
+/* ==========================================================================
+   الخلفية والإعدادات الأساسية
+   ========================================================================== */
+body {
+    background-image: linear-gradient(to bottom, #060825 0%, #000 50%);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Nunito', 'Poppins', 'Cairo', sans-serif;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
-function onPlayerReady(event) {
-    // الأغنية جاهزة للتشغيل
+* {
+    -webkit-tap-highlight-color: transparent;
 }
 
-function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-        const checkTimeInterval = setInterval(() => {
-            if (player.getCurrentTime() >= 90) {
-                player.stopVideo();
-                clearInterval(checkTimeInterval);
-            }
-        }, 500);
+/* ==========================================================================
+   واجهة الترحيب - محسّنة للجوال
+   ========================================================================== */
+.welcome-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #030412 !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    transform: none !important;
+    animation: none !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+    transition: opacity 1s ease;
+    max-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.welcome-box {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: clamp(25px, 8vw, 35px) !important;
+    border-radius: 20px !important;
+    text-align: center !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7) !important;
+    width: 100% !important;
+    max-width: 90vw !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    animation: fadeInBox 0.8s ease forwards !important;
+    min-height: auto;
+}
+
+.welcome-box h2 {
+    color: #ff6236;
+    font-size: clamp(0.9rem, 4vw, 1.3rem);
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.welcome-box .target-name {
+    color: #ffe4a0;
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    margin: 0 0 12px 0;
+    text-shadow: 0 0 15px #ffd85f;
+    word-wrap: break-word;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.welcome-box p {
+    color: #a0a5c0;
+    font-size: clamp(0.7rem, 3vw, 0.95rem);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.start-btn {
+    background: linear-gradient(135deg, #ff6236 0%, #ffd85f 100%);
+    color: #060825;
+    font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+    font-weight: bold;
+    padding: clamp(12px, 3vw, 14px) clamp(20px, 5vw, 30px);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 98, 54, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 50px;
+}
+
+.start-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px #ffd85f;
+}
+
+.start-btn:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 480px) {
+    .start-btn {
+        font-size: 1rem;
+        padding: 14px 30px;
     }
 }
 
-// توليد أجزاء الورود ديناميكياً
-document.querySelectorAll('.flower-container').forEach((el, index) => {
-    el.innerHTML = `
-        <div class="flower-top">
-            <div class="flower-petal flower-petal__1"></div>
-            <div class="flower-petal flower-petal__2"></div>
-            <div class="flower-petal flower-petal__3"></div>
-            <div class="flower-petal flower-petal__4"></div>
-            <div class="flower-petal flower-petal__5"></div>
-            <div class="flower-petal flower-petal__6"></div>
-            <div class="flower-petal flower-petal__7"></div>
-            <div class="flower-petal flower-petal__8"></div>
-            <div class="flower-circle"></div>
-            <div class="flower-light flower-light__1"></div>
-            <div class="flower-light flower-light__2"></div>
-            <div class="flower-light flower-light__3"></div>
-            <div class="flower-light flower-light__4"></div>
-            <div class="flower-light flower-light__5"></div>
-            <div class="flower-light flower-light__6"></div>
-            <div class="flower-light flower-light__7"></div>
-            <div class="flower-light flower-light__8"></div>
-        </div>
-        <div class="flower-bottom">
-            <div class="flower-stem"></div>
-            <div class="flower-leaf flower-leaf__1"></div>
-            <div class="flower-leaf flower-leaf__2"></div>
-            <div class="flower-leaf flower-leaf__3"></div>
-            <div class="flower-leaf flower-leaf__4"></div>
-            <div class="flower-leaf flower-leaf__5"></div>
-            <div class="flower-leaf flower-leaf__6"></div>
-            <div class="flower-grass flower-grass__1"></div>
-            <div class="flower-grass flower-grass__2"></div>
-            <div class="flower-grass flower-grass__3"></div>
-            <div class="flower-grass flower-grass__4"></div>
-        </div>`;
-});
+/* ==========================================================================
+   العنوان المضيء - محسّن للجوال
+   ========================================================================== */
+.flower-title-container {
+    position: absolute;
+    top: clamp(3%, 8vw, 8%);
+    left: 50%;
+    transform: translate(-50%, -15px);
+    z-index: 10;
+    width: 90%;
+    max-width: 100%;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
 
-// التحكم ببدء الحركة والموسيقى
-document.getElementById('startBtn').addEventListener('click', function () {
-    // تشغيل الموسيقى من اليوتيوب
-    if (player && typeof player.playVideo === 'function') {
-        player.playVideo();
+.flower-title-container.show-title {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+}
+
+.glowing-text {
+    font-size: clamp(1.3rem, 5vw, 2.2rem);
+    color: #ffe4a0;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px #ff6236, 0 0 15px #ffd85f;
+    animation: textPulse 3s ease-in-out infinite alternate;
+    word-wrap: break-word;
+    line-height: 1.2;
+}
+
+/* ==========================================================================
+   الورود والحاويات - محسّنة للجوال
+   ========================================================================== */
+.ground {
+    width: 100vmin;
+    height: 100vmin;
+    aspect-ratio: 1.5;
+    overflow: visible;
+    position: relative;
+    transform-origin: center center;
+    transform: scale(2);
+    animation: shrink 1.5s ease-in forwards 4s;
+}
+
+.flower-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10%;
+    aspect-ratio: 16;
+    container-type: inline-size;
+    filter: drop-shadow(0 0 25cqi #ffd85faa);
+    justify-items: center;
+    align-content: center;
+    transform-origin: bottom center;
+}
+
+.flower-container:first-child {
+    top: 50%;
+    left: 50%;
+}
+
+.flower-container:nth-child(2) {
+    top: 45%;
+    left: 30%;
+    width: 8%;
+}
+
+.flower-container:nth-child(3) {
+    top: 45%;
+    left: 70%;
+    width: 8%;
+}
+
+.flower-container:nth-child(4) {
+    top: 85%;
+    left: 95%;
+    width: 20%;
+}
+
+.flower-container:nth-child(5) {
+    top: 130%;
+    left: 30%;
+    width: 30%;
+}
+
+.flower-container:nth-child(6) {
+    top: 60%;
+    left: 10%;
+    width: 12%;
+}
+
+.flower-container:nth-child(7) {
+    top: 20%;
+    left: 15%;
+    width: 6%;
+}
+
+.flower-container:nth-child(8) {
+    top: 15%;
+    left: 35%;
+    width: 5%;
+}
+
+.flower-container:nth-child(9) {
+    top: 26%;
+    left: 85%;
+    width: 7%;
+}
+
+.flower-container:nth-child(10) {
+    top: 22%;
+    left: 60%;
+    width: 6.5%;
+}
+
+/* أجزاء الورد */
+.flower-top {
+    width: 50cqi;
+    aspect-ratio: 1.5;
+    z-index: 1;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+.flower-circle {
+    width: 30cqi;
+    aspect-ratio: 1.5;
+    background-color: #ffe4a0;
+    box-shadow: inset 0px -3cqi 3cqi #aa7a0266;
+    position: absolute;
+    scale: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100% 100% 100% 100%/90% 90% 90% 90%;
+    filter: drop-shadow(0 0 15cqi #ffd85f);
+    transform-origin: top left;
+}
+
+/* البتلات الحمراء الافتراضية */
+.flower-petal {
+    width: 80%;
+    aspect-ratio: 1;
+    background-color: #ffe4a0;
+    background-image: linear-gradient(135deg, #ff6236 20%, #ffd85f 80%);
+    position: absolute;
+    opacity: 0;
+}
+
+.flower-petal__1 {
+    bottom: 42%;
+    right: 65%;
+    border-radius: 0px 100% 5% 100%/0px 100% 5% 100%;
+    transform: rotate(-10deg) scale(0.82);
+}
+
+.flower-petal__2 {
+    bottom: 42%;
+    left: 65%;
+    border-radius: 0px 100% 5% 100%/0px 100% 5% 100%;
+    transform: rotate(100deg) scale(0.82);
+}
+
+.flower-petal__3 {
+    bottom: 40%;
+    left: 10%;
+    border-radius: 0px 100% 50% 100%/0px 100% 50% 100%;
+    transform: rotate(45deg) scale(0.8);
+}
+
+.flower-petal__4 {
+    top: -10%;
+    left: 80%;
+    border-radius: 0px 100% 0% 100%/0px 100% 0% 100%;
+    transform: rotate(135deg) scale(0.9);
+}
+
+.flower-petal__5 {
+    top: -10%;
+    right: 70%;
+    border-radius: 0px 100% 0% 100%/0px 100% 0% 100%;
+    transform: rotate(315deg) scale(0.9);
+}
+
+.flower-petal__6 {
+    top: 50%;
+    right: 65%;
+    border-radius: 0px 100% 10% 100%/0px 100% 5% 100%;
+    transform: rotate(270deg) scale(1.1);
+}
+
+.flower-petal__7 {
+    top: 50%;
+    left: 65%;
+    border-radius: 0px 100% 10% 100%/0px 100% 5% 100%;
+    transform: rotate(180deg) scale(1.1);
+}
+
+.flower-petal__8 {
+    top: 50%;
+    left: 10%;
+    border-radius: 0px 100% 50% 100%/0px 100% 30% 100%;
+    transform: rotate(225deg) scale(1);
+}
+
+/* الأضواء المتحركة */
+.flower-light {
+    width: 3cqi;
+    aspect-ratio: 1;
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.flower-light:nth-child(odd) {
+    background-color: #ffe4a0;
+    filter: blur(2cqi) drop-shadow(0 0 5cqi #ffd85f);
+}
+
+.flower-light:nth-child(even) {
+    background-color: #ff6236;
+    filter: blur(2cqi) drop-shadow(0 0 5cqi #ff6236);
+}
+
+.flower-light__1 {
+    top: 10%;
+    left: 20%;
+    scale: 0.8;
+}
+
+.flower-light__2 {
+    top: 20%;
+    left: 80%;
+    scale: 1.2;
+}
+
+.flower-light__3 {
+    top: 30%;
+    left: 50%;
+    scale: 1.5;
+}
+
+.flower-light__4 {
+    top: 40%;
+    left: 10%;
+}
+
+.flower-light__5 {
+    top: 50%;
+    left: 90%;
+    scale: 2;
+}
+
+.flower-light__6 {
+    top: 60%;
+    left: 30%;
+}
+
+.flower-light__7 {
+    top: 70%;
+    left: 40%;
+    scale: 0.5;
+}
+
+.flower-light__8 {
+    top: 60%;
+    left: 60%;
+}
+
+/* الساق والأوراق */
+.flower-bottom {
+    width: 6%;
+    aspect-ratio: 0.02;
+    left: 47%;
+    top: 50%;
+}
+
+.flower-stem {
+    width: 100%;
+    height: 100%;
+    transform: scaleY(0);
+    background-image:
+        linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent, rgba(87, 42, 25, 0.2)),
+        linear-gradient(to top, transparent 10%, #da580099, #da580099);
+    border-radius: 50px 50px 0 0;
+    transform-origin: bottom center;
+}
+
+.flower-leaf {
+    width: 40%;
+    aspect-ratio: 2.5;
+    position: absolute;
+    scale: 0;
+    opacity: 0;
+}
+
+.flower-leaf:nth-child(even) {
+    right: 55%;
+    background-image: linear-gradient(120deg, #d86100aa 0%, #da580000 90%);
+    border-radius: 0% 100% 0% 100%/0% 100% 0% 100%;
+    transform-origin: bottom right;
+}
+
+.flower-leaf:nth-child(odd) {
+    left: 55%;
+    background-image: linear-gradient(300deg, #d86100aa 0%, #da580000 90%);
+    border-radius: 100% 0% 100% 0%/100% 0% 100% 0%;
+    transform-origin: bottom left;
+}
+
+.flower-leaf__2 {
+    top: 25%;
+    transform: rotate(-15deg) scale(1);
+}
+
+.flower-leaf__1 {
+    top: 31%;
+    transform: rotate(15deg) scale(1);
+}
+
+.flower-leaf__4 {
+    top: 37%;
+    transform: rotate(-15deg) scale(1.2);
+}
+
+.flower-leaf__3 {
+    top: 43%;
+    transform: rotate(15deg) scale(1.2);
+}
+
+.flower-leaf__6 {
+    top: 50%;
+    transform: rotate(-15deg) scale(1.5);
+}
+
+.flower-leaf__5 {
+    top: 56%;
+    transform: rotate(15deg) scale(1.5);
+}
+
+.flower-grass {
+    position: absolute;
+    bottom: -20cqi;
+    width: 80cqi;
+    height: 120cqi;
+    opacity: 0;
+    scale: 0;
+    mask-image: linear-gradient(to top, transparent 15%, #fff 50%);
+    -webkit-mask-image: linear-gradient(to top, transparent 15%, #fff 50%);
+}
+
+.flower-grass:nth-child(odd) {
+    right: 55%;
+    border-top-right-radius: 100%;
+    border-right: 5cqi solid #d86100aa;
+    transform-origin: bottom right;
+}
+
+.flower-grass:nth-child(even) {
+    left: 55%;
+    border-top-left-radius: 100%;
+    border-left: 5cqi solid #d86100aa;
+    transform-origin: bottom left;
+}
+
+.flower-grass__3 {
+    left: 70% !important;
+    width: 75cqi;
+    height: 100cqi;
+}
+
+.flower-grass__4 {
+    right: 70% !important;
+    width: 75cqi;
+    height: 90cqi;
+}
+
+/* ==========================================================================
+   الورود البيضاء (الوسطى)
+   ========================================================================== */
+.white-flower-mode .flower-petal {
+    background-color: #f5f5f5;
+    background-image: linear-gradient(135deg, #ffffff 20%, #f8f8f8 80%);
+}
+
+.white-flower-mode .flower-circle {
+    background-color: #fffacc;
+    filter: drop-shadow(0 0 15cqi #ffeb99);
+    box-shadow: inset 0px -3cqi 3cqi #d4a00066;
+}
+
+.white-flower-mode .flower-light:nth-child(odd) {
+    background-color: #fffacc;
+    filter: blur(2cqi) drop-shadow(0 0 5cqi #ffeb99);
+}
+
+.white-flower-mode .flower-light:nth-child(even) {
+    background-color: #ffdd44;
+    filter: blur(2cqi) drop-shadow(0 0 5cqi #ffdd44);
+}
+
+/* ==========================================================================
+   التحريك والأنيميشنز
+   ========================================================================== */
+.animate.flower-container {
+    animation: flower-rotate 12s linear infinite;
+}
+
+.animate .flower-circle {
+    animation: grass-grow 0.25s ease-in forwards 3s;
+}
+
+.animate .flower-petal {
+    animation: petal-grow 0.5s ease-in forwards, flower-rotate 3s linear infinite;
+}
+
+.animate .flower-stem {
+    animation: stem-grow 3s ease-in forwards;
+}
+
+.animate .flower-grass {
+    animation: grass-grow 1s ease-in forwards 1.5s, flower-rotate 6s linear infinite;
+}
+
+.animate .flower-leaf {
+    animation: grass-grow 0.75s ease-in forwards, flower-rotate 6s linear infinite;
+}
+
+.animate .flower-petal__3 {
+    animation-delay: 3.2s;
+}
+
+.animate .flower-petal__2 {
+    animation-delay: 3.3s;
+}
+
+.animate .flower-petal__4 {
+    animation-delay: 3.4s;
+}
+
+.animate .flower-petal__7 {
+    animation-delay: 3.5s;
+}
+
+.animate .flower-petal__8 {
+    animation-delay: 3.6s;
+}
+
+.animate .flower-petal__6 {
+    animation-delay: 3.7s;
+}
+
+.animate .flower-petal__5 {
+    animation-delay: 3.8s;
+}
+
+.animate .flower-petal__1 {
+    animation-delay: 3.9s;
+}
+
+.animate .flower-leaf__2 {
+    animation-delay: 2s;
+}
+
+.animate .flower-leaf__1 {
+    animation-delay: 1.9s;
+}
+
+.animate .flower-leaf__4 {
+    animation-delay: 1.8s;
+}
+
+.animate .flower-leaf__3 {
+    animation-delay: 1.65s;
+}
+
+.animate .flower-leaf__6 {
+    animation-delay: 1.5s;
+}
+
+.animate .flower-leaf__5 {
+    animation-delay: 1.25s;
+}
+
+.animate .flower-light {
+    animation: light-float 5s ease-in-out infinite;
+}
+
+.animate .flower-light__1 {
+    animation-delay: 4.7s;
+}
+
+.animate .flower-light__2 {
+    animation-delay: 5.2s;
+}
+
+.animate .flower-light__3 {
+    animation-delay: 5.7s;
+}
+
+.animate .flower-light__4 {
+    animation-delay: 6.2s;
+}
+
+.animate .flower-light__5 {
+    animation-delay: 6.7s;
+}
+
+.animate .flower-light__6 {
+    animation-delay: 7.2s;
+}
+
+.animate .flower-light__7 {
+    animation-delay: 7.7s;
+}
+
+.animate .flower-light__8 {
+    animation-delay: 8.2s;
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+@keyframes fadeInBox {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
     }
 
-    // إخفاء واجهة الترحيب
-    const overlay = document.getElementById('welcome-overlay');
-    overlay.style.opacity = '0';
-    overlay.style.pointerEvents = 'none';
-    setTimeout(() => overlay.style.display = 'none', 1000);
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
-    // إظهار العنوان
-    const title = document.getElementById('flower-title');
-    setTimeout(() => {
-        title.classList.add('show-title');
-    }, 1500);
+@keyframes textPulse {
+    0% {
+        text-shadow: 0 0 10px #ff6236, 0 0 20px #ffd85f;
+    }
 
-    // تشغيل أنيميشن الورود بالتتابع
-    const flowers = Array.from(document.querySelectorAll('.flower-container'));
-    const animatedClass = 'animate';
+    100% {
+        text-shadow: 0 0 20px #ff6236, 0 0 40px #ffd85f, 0 0 60px #ff2a00;
+    }
+}
 
-    flowers[0].classList.add(animatedClass);
+@keyframes petal-grow {
 
-    setTimeout(() => {
-        for (let i = 1; i <= 2 && i < flowers.length; i++) {
-            flowers[i].classList.add(animatedClass);
+    0%,
+    100% {
+        scale: 1;
+        opacity: 0.8;
+    }
+
+    50% {
+        scale: 1.1;
+        opacity: 0.8;
+    }
+}
+
+@keyframes grass-grow {
+    100% {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+@keyframes stem-grow {
+    0% {
+        border-radius: 10%;
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes flower-rotate {
+
+    0%,
+    100% {
+        rotate: 0deg;
+    }
+
+    25% {
+        rotate: 5deg;
+    }
+
+    75% {
+        rotate: -5deg;
+    }
+}
+
+@keyframes shrink {
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes light-float {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0);
+    }
+
+    25% {
+        opacity: 1;
+        transform: translate(20cqi, -25cqi);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(0, -50cqi);
+    }
+
+    75% {
+        opacity: 1;
+        transform: translate(-20cqi, -75cqi);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(0, -100cqi);
+    }
+}
+
+/* ==========================================================================
+   التجاوب - الهواتف الصغيرة (أقل من 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+    body {
+        height: 100dvh;
+        /* استخدام Viewport Height الديناميكية للهواتف */
+    }
+
+    .welcome-overlay {
+        height: 100dvh;
+    }
+
+    .ground {
+        transform: scale(1.2);
+        animation: shrink 1.5s ease-in forwards 4s;
+    }
+
+    @keyframes shrink {
+        100% {
+            transform: scale(0.7);
         }
+    }
 
-        let remaining = flowers.slice(3);
-        const interval = setInterval(() => {
-            if (remaining.length === 0) {
-                clearInterval(interval);
-                return;
-            }
+    .flower-title-container {
+        top: clamp(2%, 6vw, 6%);
+    }
 
-            const randomIndex = Math.floor(Math.random() * remaining.length);
-            const el = remaining.splice(randomIndex, 1)[0];
-            el.classList.add(animatedClass);
-        }, 500);
+    .glowing-text {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+    }
+}
 
-    }, 3000);
-});
+/* ==========================================================================
+   التجاوب - الهواتف العادية والصغيرة (480px - 767px)
+   ========================================================================== */
+@media (min-width: 481px) and (max-width: 767px) {
+    body {
+        height: 100dvh;
+    }
+
+    .welcome-overlay {
+        height: 100dvh;
+    }
+
+    .ground {
+        transform: scale(1.5);
+        animation: shrink 1.5s ease-in forwards 4s;
+    }
+
+    @keyframes shrink {
+        100% {
+            transform: scale(0.8);
+        }
+    }
+
+    .flower-title-container {
+        top: clamp(3%, 7vw, 7%);
+    }
+}
+
+/* ==========================================================================
+   التجاوب - التابلت (768px - 1024px)
+   ========================================================================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+    body {
+        height: 100vh;
+    }
+
+    .ground {
+        transform: scale(1.8);
+        animation: shrink 1.5s ease-in forwards 4s;
+    }
+
+    @keyframes shrink {
+        100% {
+            transform: scale(0.9);
+        }
+    }
+
+    .flower-title-container {
+        top: 5%;
+    }
+
+    .glowing-text {
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+    }
+
+    .welcome-box {
+        max-width: 500px;
+    }
+}
+
+/* ==========================================================================
+   التجاوب - الايباد والشاشات الكبيرة (1025px+)
+   ========================================================================== */
+@media (min-width: 1025px) {
+    body {
+        height: 100vh;
+    }
+
+    .ground {
+        transform: scale(2);
+        animation: shrink 1.5s ease-in forwards 4s;
+    }
+
+    @keyframes shrink {
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .welcome-box {
+        max-width: 500px;
+    }
+
+    .flower-title-container {
+        top: 5%;
+    }
+}
+
+/* ==========================================================================
+   تحسينات إضافية للتجاوب
+   ========================================================================== */
+@media (orientation: portrait) {
+    body {
+        min-height: 100vh;
+    }
+
+    .ground {
+        width: 100vmin;
+    }
+
+    .welcome-overlay {
+        min-height: 100vh;
+    }
+}
+
+@media (orientation: landscape) {
+    body {
+        min-height: 100vh;
+        max-height: 100vh;
+    }
+
+    .welcome-box {
+        max-height: 80vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .glowing-text {
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+    }
+}
+
+/* ==========================================================================
+   تحسينات الأداء والسلاسة
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
