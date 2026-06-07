@@ -1,45 +1,32 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="هدية خاصة لـ جنى ❤️">
-    <meta property="og:description" content="اضغطي على الرابط لرؤية المفاجأة المجهزة لكِ خصيصاً! ✨">
-    <meta property="og:url" content="https://cupra001.github.io/jana.github.io/">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="روحي جنى">
-    <meta name="twitter:description" content="اضغط على الرابط لرؤية المفاجأة المجهزة لك خصيصاً! ✨">
-    <title>هدية خاصة لـ جنى</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>Glowing Flower Animation</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-    <!-- واجهة الترحيب -->
     <div id="welcome-overlay" class="welcome-overlay">
         <div class="welcome-box">
             <h2>هدية خاصة من أجل:</h2>
-            <h1 class="target-name">جنى</h1>
+            <h1 class="target-name">جــنــى</h1>
             <p>❤️💫</p>
             <button id="startBtn" class="start-btn">افتح الهدية 🎁</button>
         </div>
     </div>
 
-    <!-- العنوان المضيء -->
     <div id="flower-title" class="flower-title-container">
-        <h1 class="glowing-text">روحي جنى</h1>
+        <h1 class="glowing-text">احـــلـــى جــنــى </h1>
     </div>
 
-    <!-- الورود المتحركة -->
     <div class="ground">
         <div class="flower-container"></div>
         <div class="flower-container"></div>
-        <div class="flower-container white-flower-mode"></div>
+        <div class="flower-container"></div>
         <div class="flower-container"></div>
         <div class="flower-container"></div>
         <div class="flower-container"></div>
@@ -49,9 +36,11 @@
         <div class="flower-container"></div>
     </div>
 
-    <!-- مشغل الصوت المحلي -->
-    <audio id="local-audio" src="song.mp3" preload="auto"></audio>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
 
+    <script src="./script.js"></script>
 </body>
 
 </html>
