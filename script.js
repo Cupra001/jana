@@ -1,3 +1,48 @@
+let player;
+
+// تهيئة مشغل اليوتيوب
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtube-audio-player', {
+        height: '0',
+        width: '0',
+        videoId: '31qYeEsoClw', // معرف الأغنية
+        playerVars: {
+            'start': 45, // البدء من الثانية 0:45
+            'controls': 0,
+            'disablekb': 1,
+            'modestbranding': 1,
+            'rel': 0,
+            'autoplay': 0,
+            'fs': 0,
+            'playsinline': 1
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    console.log("Player is ready");
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+        console.log("Music is playing");
+        const checkTimeInterval = setInterval(() => {
+            if (player && typeof player.getCurrentTime === 'function') {
+                const currentTime = player.getCurrentTime();
+                // التوقف بعد حوالي 1.5 دقيقة من البدء
+                if (currentTime >= 135) { // 45 + 90 = 135 ثانية
+                    player.stopVideo();
+                    clearInterval(checkTimeInterval);
+                }
+            }
+        }, 500);
+    }
+}
+
 // توليد أجزاء الورود ديناميكياً
 document.querySelectorAll('.flower-container').forEach((el, index) => {
     el.innerHTML = `
@@ -39,14 +84,14 @@ document.querySelectorAll('.flower-container').forEach((el, index) => {
 document.getElementById('startBtn').addEventListener('click', function () {
     console.log("Start button clicked");
 
-    // تشغيل ملف الأغنية المحلي song.mp3
-    const localAudio = document.getElementById('local-audio');
-    if (localAudio) {
-        localAudio.play().then(() => {
-            console.log("Local audio started playing successfully.");
-        }).catch(error => {
-            console.error("Audio playback failed:", error);
-        });
+    // تشغيل الموسيقى من اليوتيوب
+    try {
+        if (player && typeof player.playVideo === 'function') {
+            player.playVideo();
+            console.log("YouTube video playing");
+        }
+    } catch (error) {
+        console.error("Error playing YouTube video:", error);
     }
 
     // إخفاء واجهة الترحيب
