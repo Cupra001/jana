@@ -13,128 +13,40 @@
 
 <body>
 
-    <!-- مشغل يوتيوب مخفي للصوت فقط -->
-    <div id="youtube-audio-player" style="display: none;"></div>
-
-    <!-- الواجهة الأولى: كارت المفاجأة المخصص لـ جنى -->
-    <div id="gift-card" class="card">
-        <h2>هدية خاصة من أجل:</h2>
-        <h1 class="name">جنى</h1>
-        <p class="emoji">❤️🩹</p>
-        <button id="open-btn">🎁 افتح الهدية</button>
-    </div>
-
-    <!-- الواجهة الثانية: الورود 3D الاحترافية -->
-    <div id="flower-container" class="hidden">
-        <h1 class="title-glow">روحي جنى</h1>
-
-        <div class="flowers-wrapper">
-            <!-- وردة 1 حمراء 3D (يسار) -->
-            <div class="flower f1 red-flower">
-                <div class="flower-head">
-                    <div class="petals-wrapper">
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                    </div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem">
-                    <div class="leaf left"></div>
-                    <div class="leaf right"></div>
-                </div>
-            </div>
-
-            <!-- وردة 2 حمراء 3D (وسط يسار) -->
-            <div class="flower f2 red-flower">
-                <div class="flower-head">
-                    <div class="petals-wrapper">
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                    </div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem">
-                    <div class="leaf left"></div>
-                </div>
-            </div>
-
-            <!-- وردة 3 بيضاء 3D (الوسطى الرئيسية) -->
-            <div class="flower f3 white-flower">
-                <div class="main-head">
-                    <div class="petals-wrapper">
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                    </div>
-                    <div class="center"></div>
-                </div>
-                <div class="main-stem">
-                    <div class="leaf left"></div>
-                    <div class="leaf right"></div>
-                </div>
-            </div>
-
-            <!-- وردة 4 حمراء 3D (وسط يمين) -->
-            <div class="flower f4 red-flower">
-                <div class="flower-head">
-                    <div class="petals-wrapper">
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                    </div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem">
-                    <div class="leaf right"></div>
-                </div>
-            </div>
-
-            <!-- وردة 5 حمراء 3D (يمين) -->
-            <div class="flower f5 red-flower">
-                <div class="flower-head">
-                    <div class="petals-wrapper">
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                        <div class="petal"></div>
-                    </div>
-                    <div class="center"></div>
-                </div>
-                <div class="stem">
-                    <div class="leaf left"></div>
-                </div>
-            </div>
+    <!-- واجهة الترحيب -->
+    <div id="welcome-overlay" class="welcome-overlay">
+        <div class="welcome-box">
+            <h2>هدية خاصة من أجل:</h2>
+            <h1 class="target-name">جنى</h1>
+            <p>❤️💫</p>
+            <button id="startBtn" class="start-btn">افتح الهدية 🎁</button>
         </div>
     </div>
 
-    <!-- تحميل مكتبة الـ API لليوتيوب لاستدعاء الأغنية -->
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- العنوان المضيء -->
+    <div id="flower-title" class="flower-title-container">
+        <h1 class="glowing-text">روحي جنى</h1>
+    </div>
+
+    <!-- الورود المتحركة -->
+    <div class="ground">
+        <div class="flower-container"></div>
+        <div class="flower-container"></div>
+        <div class="flower-container white-flower-mode"></div>
+        <div class="flower-container"></div>
+        <div class="flower-container"></div>
+        <div class="flower-container"></div>
+        <div class="flower-container"></div>
+        <div class="flower-container"></div>
+        <div class="flower-container"></div>
+        <div class="flower-container"></div>
+    </div>
+
+    <!-- الموسيقى -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
     <script src="script.js"></script>
 </body>
 

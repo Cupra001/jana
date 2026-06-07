@@ -1,68 +1,80 @@
-let player;
-
-// تهيئة مشغل اليوتيوب المخفي عند تحميل الصفحة
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-audio-player', {
-        height: '0',
-        width: '0',
-        videoId: '31qYeEsoClw',
-        playerVars: {
-            'start': 45,
-            'controls': 0,
-            'disablekb': 1,
-            'modestbranding': 1,
-            'rel': 0,
-            'autoplay': 1
-        },
-        events: {
-            'onStateChange': onPlayerStateChange
-        }
-    });
-}
-
-function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-        const checkTimeInterval = setInterval(() => {
-            if (player.getCurrentTime() >= 90) {
-                player.stopVideo();
-                clearInterval(checkTimeInterval);
-            }
-        }, 500);
-    }
-}
-
-document.getElementById('open-btn').addEventListener('click', function () {
-    if (player && typeof player.playVideo === 'function') {
-        player.playVideo();
-    }
-
-    const giftCard = document.getElementById('gift-card');
-    giftCard.style.opacity = '0';
-    giftCard.style.transform = 'scale(0.8) translateY(-50px)';
-
-    setTimeout(() => {
-        giftCard.classList.add('hidden');
-
-        const flowerContainer = document.getElementById('flower-container');
-        flowerContainer.classList.remove('hidden');
-
-        // إنشاء الفراشات بعد ظهور الورود
-        for (let i = 0; i < 8; i++) {
-            setTimeout(() => createButterfly(), i * 500);
-        }
-    }, 500);
+// توليد أجزاء الورود ديناميكياً
+document.querySelectorAll('.flower-container').forEach((el, index) => {
+    el.innerHTML = `
+        <div class="flower-top">
+            <div class="flower-petal flower-petal__1"></div>
+            <div class="flower-petal flower-petal__2"></div>
+            <div class="flower-petal flower-petal__3"></div>
+            <div class="flower-petal flower-petal__4"></div>
+            <div class="flower-petal flower-petal__5"></div>
+            <div class="flower-petal flower-petal__6"></div>
+            <div class="flower-petal flower-petal__7"></div>
+            <div class="flower-petal flower-petal__8"></div>
+            <div class="flower-circle"></div>
+            <div class="flower-light flower-light__1"></div>
+            <div class="flower-light flower-light__2"></div>
+            <div class="flower-light flower-light__3"></div>
+            <div class="flower-light flower-light__4"></div>
+            <div class="flower-light flower-light__5"></div>
+            <div class="flower-light flower-light__6"></div>
+            <div class="flower-light flower-light__7"></div>
+            <div class="flower-light flower-light__8"></div>
+        </div>
+        <div class="flower-bottom">
+            <div class="flower-stem"></div>
+            <div class="flower-leaf flower-leaf__1"></div>
+            <div class="flower-leaf flower-leaf__2"></div>
+            <div class="flower-leaf flower-leaf__3"></div>
+            <div class="flower-leaf flower-leaf__4"></div>
+            <div class="flower-leaf flower-leaf__5"></div>
+            <div class="flower-leaf flower-leaf__6"></div>
+            <div class="flower-grass flower-grass__1"></div>
+            <div class="flower-grass flower-grass__2"></div>
+            <div class="flower-grass flower-grass__3"></div>
+            <div class="flower-grass flower-grass__4"></div>
+        </div>`;
 });
 
-// تأثير الفراشات العشوائية
-function createButterfly() {
-    const flowerContainer = document.getElementById('flower-container');
-    const butterfly = document.createElement('div');
-    butterfly.className = 'butterfly';
-    butterfly.innerHTML = '🦋';
-    butterfly.style.left = Math.random() * 100 + '%';
-    butterfly.style.top = Math.random() * 50 + '%';
-    butterfly.style.animationDelay = Math.random() * 2 + 's';
-    flowerContainer.appendChild(butterfly);
+// التحكم ببدء الحركة والموسيقى
+document.getElementById('startBtn').addEventListener('click', function () {
+    // تشغيل الموسيقى
+    const music = document.getElementById("bgMusic");
+    music.play().catch(error => console.log("Playback interaction required:", error));
 
-    setTimeout(() => butterfly.remove(), 10000);
-}
+    // إخفاء واجهة الترحيب
+    const overlay = document.getElementById('welcome-overlay');
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+    setTimeout(() => overlay.style.display = 'none', 1000);
+
+    // إظهار العنوان
+    const title = document.getElementById('flower-title');
+    setTimeout(() => {
+        title.classList.add('show-title');
+    }, 1500);
+
+    // تشغيل أنيميشن الورود بالتتابع
+    const flowers = Array.from(document.querySelectorAll('.flower-container'));
+    const animatedClass = 'animate';
+
+    flowers[0].classList.add(animatedClass);
+
+    setTimeout(() => {
+        for (let i = 1; i <= 2 && i < flowers.length; i++) {
+            flowers[i].classList.add(animatedClass);
+        }
+
+        let remaining = flowers.slice(3);
+        const interval = setInterval(() => {
+            if (remaining.length === 0) {
+                clearInterval(interval);
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * remaining.length);
+            const el = remaining.splice(randomIndex, 1)[0];
+            el.classList.add(animatedClass);
+        }, 500);
+
+    }, 3000);
+});
