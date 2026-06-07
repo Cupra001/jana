@@ -1,50 +1,5 @@
-let player;
-
-// تهيئة مشغل اليوتيوب
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-audio-player', {
-        height: '0',
-        width: '0',
-        videoId: '31qYeEsoClw', // معرف الأغنية
-        playerVars: {
-            'start': 45, // البدء من الثانية 0:45
-            'controls': 0,
-            'disablekb': 1,
-            'modestbranding': 1,
-            'rel': 0,
-            'autoplay': 0,
-            'fs': 0,
-            'playsinline': 1
-        },
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
-}
-
-function onPlayerReady(event) {
-    console.log("Player is ready");
-}
-
-function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-        console.log("Music is playing");
-        const checkTimeInterval = setInterval(() => {
-            if (player && typeof player.getCurrentTime === 'function') {
-                const currentTime = player.getCurrentTime();
-                // التوقف بعد حوالي 1.5 دقيقة من البدء
-                if (currentTime >= 135) { // 45 + 90 = 135 ثانية
-                    player.stopVideo();
-                    clearInterval(checkTimeInterval);
-                }
-            }
-        }, 500);
-    }
-}
-
-// توليد أجزاء الورود ديناميكياً
-document.querySelectorAll('.flower-container').forEach((el, index) => {
+ // توليد أجزاء الورود ديناميكياً داخل الحاويات
+document.querySelectorAll('.flower-container').forEach(el => {
     el.innerHTML = `
         <div class="flower-top">
             <div class="flower-petal flower-petal__1"></div>
@@ -80,54 +35,46 @@ document.querySelectorAll('.flower-container').forEach((el, index) => {
         </div>`;
 });
 
-// التحكم ببدء الحركة والموسيقى
-document.getElementById('startBtn').addEventListener('click', function () {
-    console.log("Start button clicked");
+// التحكم ببدء الحركة والموسيقى عند النقر على زر "افتح الهدية"
+document.getElementById('startBtn').addEventListener('click', function() {
+    // 1. تشغيل الأغنية فوراً وبدون كتم
+    const music = document.getElementById("bgMusic");
+    music.play().catch(error => console.log("Playback interaction required:", error));
 
-    // تشغيل الموسيقى من اليوتيوب
-    try {
-        if (player && typeof player.playVideo === 'function') {
-            player.playVideo();
-            console.log("YouTube video playing");
-        }
-    } catch (error) {
-        console.error("Error playing YouTube video:", error);
-    }
-
-    // إخفاء واجهة الترحيب
+    // 2. إخفاء واجهة الترحيب بنعومة
     const overlay = document.getElementById('welcome-overlay');
     overlay.style.opacity = '0';
     overlay.style.pointerEvents = 'none';
     setTimeout(() => overlay.style.display = 'none', 1000);
 
-    // إظهار العنوان
+    // 3. إظهار نص الاسم المضيء فوق الورود
     const title = document.getElementById('flower-title');
     setTimeout(() => {
         title.classList.add('show-title');
     }, 1500);
 
-    // تشغيل أنيميشن الورود بالتتابع
+    // 4. تشغيل أنيميشن نمو الورود بالتتابع الاحترافي الخاص بك
     const flowers = Array.from(document.querySelectorAll('.flower-container'));
     const animatedClass = 'animate';
-
+    
     flowers[0].classList.add(animatedClass);
-
+    
     setTimeout(() => {
         for (let i = 1; i <= 2 && i < flowers.length; i++) {
             flowers[i].classList.add(animatedClass);
         }
-
-        let remaining = flowers.slice(3);
+    
+        let remaining = flowers.slice(3); 
         const interval = setInterval(() => {
             if (remaining.length === 0) {
                 clearInterval(interval);
                 return;
             }
-
+        
             const randomIndex = Math.floor(Math.random() * remaining.length);
-            const el = remaining.splice(randomIndex, 1)[0];
+            const el = remaining.splice(randomIndex, 1)[0]; 
             el.classList.add(animatedClass);
         }, 500);
-
+    
     }, 3000);
 });
