@@ -12,7 +12,7 @@ body {
     align-items: center;
     overflow: hidden;
     position: relative;
-    font-family: 'Nunito', 'Poppins', sans-serif;
+    font-family: 'Nunito', 'Poppins', 'Cairo', sans-serif;
 }
 
 /* ==========================================================================
@@ -33,6 +33,7 @@ body {
     animation: none !important;
     padding: 20px !important;
     box-sizing: border-box !important;
+    transition: opacity 1s ease;
 }
 
 .welcome-box {
@@ -46,13 +47,14 @@ body {
     width: 90% !important;
     box-sizing: border-box !important;
     transform: none !important;
-    animation: none !important;
+    animation: fadeInBox 0.8s ease forwards !important;
 }
 
 .welcome-box h2 {
     color: #ff6236;
     font-size: clamp(1rem, 4vw, 1.3rem);
     margin: 0 0 10px 0;
+    font-weight: 700;
 }
 
 .welcome-box .target-name {
@@ -61,6 +63,7 @@ body {
     margin: 0 0 15px 0;
     text-shadow: 0 0 15px #ffd85f;
     word-wrap: break-word;
+    font-weight: 700;
 }
 
 .welcome-box p {
@@ -89,6 +92,10 @@ body {
     box-shadow: 0 0 30px #ffd85f;
 }
 
+.start-btn:active {
+    transform: scale(0.98);
+}
+
 /* ==========================================================================
    العنوان المضيء
    ========================================================================== */
@@ -108,6 +115,7 @@ body {
 .flower-title-container.show-title {
     opacity: 1;
     transform: translate(-50%, 0);
+    pointer-events: auto;
 }
 
 .glowing-text {
@@ -617,6 +625,18 @@ body {
 /* ==========================================================================
    Keyframes
    ========================================================================== */
+@keyframes fadeInBox {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 @keyframes textPulse {
     0% {
         text-shadow: 0 0 10px #ff6236, 0 0 20px #ffd85f;

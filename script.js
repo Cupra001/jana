@@ -1,3 +1,41 @@
+let player;
+
+// تهيئة مشغل اليوتيوب
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtube-audio-player', {
+        height: '0',
+        width: '0',
+        videoId: '31qYeEsoClw', // معرف الأغنية - غيره إذا بتريد أغنية ثانية
+        playerVars: {
+            'start': 45,
+            'controls': 0,
+            'disablekb': 1,
+            'modestbranding': 1,
+            'rel': 0,
+            'autoplay': 0
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    // الأغنية جاهزة للتشغيل
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+        const checkTimeInterval = setInterval(() => {
+            if (player.getCurrentTime() >= 90) {
+                player.stopVideo();
+                clearInterval(checkTimeInterval);
+            }
+        }, 500);
+    }
+}
+
 // توليد أجزاء الورود ديناميكياً
 document.querySelectorAll('.flower-container').forEach((el, index) => {
     el.innerHTML = `
@@ -37,9 +75,10 @@ document.querySelectorAll('.flower-container').forEach((el, index) => {
 
 // التحكم ببدء الحركة والموسيقى
 document.getElementById('startBtn').addEventListener('click', function () {
-    // تشغيل الموسيقى
-    const music = document.getElementById("bgMusic");
-    music.play().catch(error => console.log("Playback interaction required:", error));
+    // تشغيل الموسيقى من اليوتيوب
+    if (player && typeof player.playVideo === 'function') {
+        player.playVideo();
+    }
 
     // إخفاء واجهة الترحيب
     const overlay = document.getElementById('welcome-overlay');
