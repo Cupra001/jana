@@ -5,13 +5,14 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-audio-player', {
         height: '0',
         width: '0',
-        videoId: '31qYeEsoClw', // معرف الأغنية الخاصة بك
+        videoId: '31qYeEsoClw',
         playerVars: {
-            'start': 45,       // بدء التشغيل من الثانية 45 (0:45)
+            'start': 45,
             'controls': 0,
             'disablekb': 1,
             'modestbranding': 1,
-            'rel': 0
+            'rel': 0,
+            'autoplay': 1
         },
         events: {
             'onStateChange': onPlayerStateChange
@@ -20,7 +21,6 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerStateChange(event) {
-    // مراقبة الوقت لإيقاف الأغنية بدقة عند الدقيقة 1:30 (الثانية 90)
     if (event.data == YT.PlayerState.PLAYING) {
         const checkTimeInterval = setInterval(() => {
             if (player.getCurrentTime() >= 90) {
@@ -32,20 +32,37 @@ function onPlayerStateChange(event) {
 }
 
 document.getElementById('open-btn').addEventListener('click', function () {
-    // 1. تشغيل الأغنية بصوت نقي عند التفاعل
     if (player && typeof player.playVideo === 'function') {
         player.playVideo();
     }
 
-    // 2. إخفاء الكارت مع أنميشن لطيف
     const giftCard = document.getElementById('gift-card');
     giftCard.style.opacity = '0';
+    giftCard.style.transform = 'scale(0.8) translateY(-50px)';
 
     setTimeout(() => {
         giftCard.classList.add('hidden');
 
-        // 3. إظهار حقل الورود المتباعدة والوردة البيضاء الساحرة
         const flowerContainer = document.getElementById('flower-container');
         flowerContainer.classList.remove('hidden');
+
+        // إنشاء الفراشات بعد ظهور الورود
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => createButterfly(), i * 500);
+        }
     }, 500);
 });
+
+// تأثير الفراشات العشوائية
+function createButterfly() {
+    const flowerContainer = document.getElementById('flower-container');
+    const butterfly = document.createElement('div');
+    butterfly.className = 'butterfly';
+    butterfly.innerHTML = '🦋';
+    butterfly.style.left = Math.random() * 100 + '%';
+    butterfly.style.top = Math.random() * 50 + '%';
+    butterfly.style.animationDelay = Math.random() * 2 + 's';
+    flowerContainer.appendChild(butterfly);
+
+    setTimeout(() => butterfly.remove(), 10000);
+}

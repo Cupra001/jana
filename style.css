@@ -9,6 +9,7 @@ body {
     align-items: center;
     overflow: hidden;
     font-family: 'Cairo', sans-serif;
+    perspective: 1200px;
 }
 
 /* كارت المفاجأة */
@@ -22,12 +23,15 @@ body {
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
     z-index: 10;
     transition: all 0.5s ease-in-out;
+    animation: cardEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .card h2 {
     color: #ff9d00;
     font-size: 1.4rem;
     margin: 0;
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+    opacity: 0;
 }
 
 .card .name {
@@ -35,11 +39,15 @@ body {
     font-size: 3.8rem;
     margin: 10px 0;
     text-shadow: 0 0 15px rgba(255, 251, 0, 0.6), 0 0 30px rgba(255, 115, 0, 0.5);
+    animation: fadeInUp 0.8s ease-out 0.4s forwards;
+    opacity: 0;
 }
 
 .card .emoji {
     font-size: 2rem;
     margin-bottom: 30px;
+    animation: fadeInUp 0.8s ease-out 0.6s forwards, bounce 1.5s ease-in-out 1s infinite;
+    opacity: 0;
 }
 
 .card button {
@@ -52,6 +60,18 @@ body {
     border-radius: 50px;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(255, 81, 0, 0.3);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out 0.8s forwards, pulse-button 2s ease-in-out 1.2s infinite;
+    opacity: 0;
+}
+
+.card button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 81, 0, 0.5);
+}
+
+.card button:active {
+    transform: translateY(-1px);
 }
 
 .hidden {
@@ -67,6 +87,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+    perspective: 1200px;
 }
 
 .title-glow {
@@ -76,17 +97,19 @@ body {
     font-size: 3.2rem;
     text-shadow: 0 0 15px rgba(255, 251, 0, 0.8), 0 0 30px rgba(255, 72, 0, 0.6);
     z-index: 5;
+    animation: fadeInDown 1s ease-out forwards;
 }
 
-/* زيادة التباعد بين الورود (gap: 65px) لتبتعد عن بعضها */
+/* التباعد بين الورود */
 .flowers-wrapper {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 65px;
+    gap: 100px;
     width: 100%;
     height: 70%;
-    padding-bottom: 20px;
+    padding-bottom: 60px;
+    perspective: 1200px;
 }
 
 .flower {
@@ -96,178 +119,395 @@ body {
     align-items: center;
     transform-origin: bottom center;
     opacity: 0;
-    animation: growUp 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-        swaying 4s ease-in-out infinite alternate;
+    animation: growUp 4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, swaying 7s ease-in-out infinite alternate;
+    filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.8));
+    transform-style: preserve-3d;
 }
 
 .f1 {
-    animation-delay: 0.6s, 0.6s;
-    transform: scale(0.75);
+    animation-delay: 0.8s, 0.8s;
+    transform: scale(0.75) rotateY(-20deg) rotateZ(-15deg);
 }
 
 .f2 {
-    animation-delay: 0.3s, 0.3s;
-    transform: scale(0.9);
+    animation-delay: 0.4s, 0.4s;
+    transform: scale(0.92) rotateY(-10deg) rotateZ(-8deg);
 }
 
 .f3 {
     animation-delay: 0s, 0s;
-    transform: scale(1.25);
+    transform: scale(1.18) rotateY(0deg) rotateZ(0deg);
     z-index: 3;
 }
 
-/* الوردة البيضاء الكبرى */
 .f4 {
-    animation-delay: 0.4s, 0.4s;
-    transform: scale(0.95);
+    animation-delay: 0.5s, 0.5s;
+    transform: scale(0.88) rotateY(10deg) rotateZ(8deg);
 }
 
 .f5 {
-    animation-delay: 0.7s, 0.7s;
-    transform: scale(0.7);
+    animation-delay: 0.9s, 0.9s;
+    transform: scale(0.75) rotateY(20deg) rotateZ(15deg);
 }
 
-/* السيقان والأوراق */
+/* السيقان والأوراق الواقعية 3D */
 .stem {
     width: 6px;
-    height: 220px;
-    background: linear-gradient(to top, #2b1708, #ff6a00);
-    border-radius: 4px;
+    height: 300px;
+    background: linear-gradient(90deg, #0a2e17 0%, #1a5c2f 25%, #2a8f4f 50%, #1a5c2f 75%, #0a2e17 100%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8),
+        inset -2px 0 4px rgba(100, 180, 100, 0.3),
+        inset 2px 0 4px rgba(0, 0, 0, 0.4);
+    transform-style: preserve-3d;
 }
 
 .main-stem {
-    height: 290px;
-    width: 8px;
-    background: linear-gradient(to top, #2b1708, #ffffff);
+    height: 380px;
+    width: 7px;
+    background: linear-gradient(90deg, #0a2e17 0%, #1a5c2f 25%, #2a9f5f 50%, #1a5c2f 75%, #0a2e17 100%);
+    border-radius: 50%;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9),
+        inset -2px 0 5px rgba(100, 180, 100, 0.3),
+        inset 2px 0 5px rgba(0, 0, 0, 0.4);
+    transform-style: preserve-3d;
 }
 
 .leaf {
     position: absolute;
-    width: 25px;
-    height: 12px;
-    background: #ff5100;
-    border-radius: 15px 0;
-    opacity: 0.5;
+    background: linear-gradient(to bottom right, #0d3d1f 0%, #1a5c2f 30%, #2a8f4f 60%, #3ab570 80%, #1a5c2f 100%);
+    border-radius: 0% 100% 85% 0%;
+    opacity: 0.95;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5),
+        inset -2px -2px 6px rgba(150, 220, 150, 0.2),
+        inset 2px 2px 4px rgba(0, 0, 0, 0.3);
+    transform-style: preserve-3d;
 }
 
 .leaf.left {
-    left: -22px;
+    width: 50px;
+    height: 25px;
+    left: -40px;
     top: 50%;
-    transform: rotate(-35deg);
+    transform: rotate(-45deg) skewY(-8deg) rotateX(-15deg);
 }
 
 .leaf.right {
-    right: -22px;
-    top: 65%;
-    transform: rotate(35deg) scaleX(-1);
+    width: 50px;
+    height: 25px;
+    right: -40px;
+    top: 68%;
+    transform: rotate(45deg) scaleX(-1) skewY(-8deg) rotateX(-15deg);
 }
 
-/* رؤوس الزهور */
+/* رؤوس الزهور 3D احترافية */
 .flower-head {
     position: absolute;
-    top: -35px;
-    width: 70px;
-    height: 70px;
+    top: -60px;
+    width: 120px;
+    height: 120px;
+    transform-style: preserve-3d;
 }
 
 .main-head {
-    top: -45px;
-    width: 90px;
-    height: 90px;
+    top: -85px;
+    width: 160px;
+    height: 160px;
+    transform-style: preserve-3d;
 }
 
-.petals {
+.petals-wrapper {
     width: 100%;
     height: 100%;
     position: relative;
-    animation: slowRotate 25s linear infinite;
+    transform-style: preserve-3d;
+    animation: rotatePetals 40s linear infinite;
 }
 
 .petal {
     position: absolute;
-    width: 100%;
-    height: 32%;
-    border-radius: 50%;
-    top: 34%;
-    transform-origin: center center;
+    width: 55%;
+    height: 52%;
+    border-radius: 50% 50% 48% 30%;
+    top: 24%;
+    left: 22.5%;
+    transform-origin: 50% 130%;
+    box-shadow: inset -4px -4px 12px rgba(0, 0, 0, 0.3),
+        inset 2px 2px 8px rgba(255, 255, 255, 0.1),
+        0 8px 20px rgba(0, 0, 0, 0.4);
+    transform-style: preserve-3d;
 }
 
-/* === التحكم بالألوان وتوحيدها عدا الوسطى بيضاء منورة === */
-
-/* 1. ألوان باقي الورود (البرتقالي الموحد المتوهج) */
-.orange-flower .petal {
-    background: linear-gradient(90deg, rgba(255, 76, 0, 0.85), rgba(255, 174, 0, 0.4));
-    filter: drop-shadow(0 0 6px rgba(255, 81, 0, 0.6));
+/* الورود الحمراء الاحترافية 3D */
+.red-flower .petal {
+    background: linear-gradient(135deg,
+            #8b0000 0%,
+            #bb0000 5%,
+            #cc0000 10%,
+            #dd0000 15%,
+            #ff0000 25%,
+            #ff2222 40%,
+            #ff4444 60%,
+            #ff6666 80%,
+            #ff8888 95%,
+            #ffaaaa 100%);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
 }
 
-.orange-flower .center-glow {
+.red-flower .petal:nth-child(1) {
+    background: linear-gradient(135deg, #990000 0%, #bb0000 8%, #dd0000 15%, #ff0000 25%, #ff3333 50%, #ff6666 80%, #ff8888 100%);
+    opacity: 0.97;
+    filter: drop-shadow(0 6px 12px rgba(100, 0, 0, 0.3));
+}
+
+.red-flower .petal:nth-child(2) {
+    background: linear-gradient(135deg, #bb0000 0%, #dd0000 12%, #ff0000 20%, #ff2222 40%, #ff5555 70%, #ff8888 98%, #ffaaaa 100%);
+    opacity: 0.91;
+}
+
+.red-flower .petal:nth-child(3) {
+    background: linear-gradient(135deg, #dd0000 0%, #ff0000 18%, #ff3333 35%, #ff6666 65%, #ff9999 90%, #ffbbbb 100%);
+    opacity: 0.88;
+}
+
+.red-flower .petal:nth-child(4) {
+    background: linear-gradient(135deg, #aa0000 0%, #cc0000 10%, #ee0000 20%, #ff1111 35%, #ff4444 60%, #ff7777 85%, #ffaaaa 100%);
+    opacity: 0.94;
+}
+
+.red-flower .petal:nth-child(5) {
+    background: linear-gradient(135deg, #990000 0%, #bb0000 7%, #dd0000 14%, #ff0000 22%, #ff3333 45%, #ff6666 75%, #ff9999 100%);
+    opacity: 0.92;
+}
+
+.red-flower .petal:nth-child(6) {
+    background: linear-gradient(135deg, #cc0000 0%, #ff0000 15%, #ff2222 28%, #ff5555 55%, #ff8888 85%, #ffbbbb 100%);
+    opacity: 0.87;
+}
+
+.red-flower .petal:nth-child(7) {
+    background: linear-gradient(135deg, #bb0000 0%, #dd0000 10%, #ff0000 20%, #ff3333 40%, #ff6666 70%, #ff9999 98%, #ffcccc 100%);
+    opacity: 0.93;
+}
+
+.red-flower .petal:nth-child(8) {
+    background: linear-gradient(135deg, #aa0000 0%, #cc0000 8%, #ee0000 16%, #ff1111 28%, #ff4444 50%, #ff7777 80%, #ffaaaa 100%);
+    opacity: 0.90;
+}
+
+.red-flower .center {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 22px;
-    height: 22px;
-    background: #ffffff;
+    transform: translate(-50%, -50%) translateZ(8px);
+    width: 45px;
+    height: 45px;
+    background: radial-gradient(circle at 40% 40%,
+            #ffff99 0%,
+            #ffee77 10%,
+            #ffdd44 20%,
+            #ffcc00 35%,
+            #ffbb00 50%,
+            #ff9900 70%,
+            #dd6600 85%,
+            #aa4400 100%);
     border-radius: 50%;
-    box-shadow: 0 0 20px #fff, 0 0 35px #ffcc00, 0 0 50px #ff5100;
+    box-shadow: 0 0 6px rgba(255, 200, 0, 0.9),
+        0 0 14px rgba(255, 153, 0, 0.7),
+        0 0 24px rgba(200, 100, 0, 0.4),
+        inset -4px -4px 12px rgba(0, 0, 0, 0.4),
+        inset 3px 3px 8px rgba(255, 255, 255, 0.15);
+    animation: pulseGlowRed 4s infinite alternate;
 }
 
-/* 2. ألوان الوردة الوسطى (بيضاء منورة ومضيئة بالكامل) */
+/* الورود البيضاء الاحترافية 3D */
 .white-flower .petal {
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 255, 0.5));
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+    background: linear-gradient(135deg,
+            #f8f8f8 0%,
+            #ffffff 12%,
+            #fafafa 25%,
+            #f5f5f5 40%,
+            #f0f0f0 60%,
+            #efefef 75%,
+            #f5f5f5 90%,
+            #ffffff 100%);
+    filter: drop-shadow(0 5px 10px rgba(150, 150, 150, 0.2));
 }
 
-.white-flower .center-glow-white {
+.white-flower .petal:nth-child(1) {
+    background: linear-gradient(135deg, #f0f0f0 0%, #fafafa 15%, #ffffff 30%, #f8f8f8 50%, #f0f0f0 75%, #e8e8e8 90%, #ffffff 100%);
+    opacity: 0.96;
+}
+
+.white-flower .petal:nth-child(2) {
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 20%, #f5f5f5 40%, #efefef 70%, #ffffff 100%);
+    opacity: 0.89;
+}
+
+.white-flower .petal:nth-child(3) {
+    background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 25%, #f5f5f5 50%, #e8e8e8 80%, #ffffff 100%);
+    opacity: 0.87;
+}
+
+.white-flower .petal:nth-child(4) {
+    background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 18%, #ffffff 35%, #f0f0f0 65%, #ffffff 100%);
+    opacity: 0.92;
+}
+
+.white-flower .petal:nth-child(5) {
+    background: linear-gradient(135deg, #efefef 0%, #f5f5f5 15%, #ffffff 28%, #f8f8f8 55%, #ffffff 100%);
+    opacity: 0.90;
+}
+
+.white-flower .petal:nth-child(6) {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 22%, #efefef 50%, #f0f0f0 80%, #ffffff 100%);
+    opacity: 0.86;
+}
+
+.white-flower .petal:nth-child(7) {
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 18%, #f0f0f0 40%, #e8e8e8 70%, #ffffff 100%);
+    opacity: 0.91;
+}
+
+.white-flower .petal:nth-child(8) {
+    background: linear-gradient(135deg, #fafafa 0%, #ffffff 14%, #f8f8f8 32%, #f0f0f0 62%, #ffffff 100%);
+    opacity: 0.88;
+}
+
+.white-flower .center {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 26px;
-    height: 26px;
-    background: #ffffff;
+    transform: translate(-50%, -50%) translateZ(10px);
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 40% 40%,
+            #fffacc 0%,
+            #ffff99 8%,
+            #ffee77 18%,
+            #ffdd44 30%,
+            #ffcc00 45%,
+            #ffbb00 65%,
+            #ff9900 80%,
+            #dd7700 95%,
+            #aa5500 100%);
     border-radius: 50%;
-    box-shadow: 0 0 25px #fff, 0 0 50px #ffffff, 0 0 75px #e6f2ff;
-    animation: pulseWhiteGlow 2s infinite alternate;
+    box-shadow: 0 0 8px rgba(255, 220, 100, 0.8),
+        0 0 16px rgba(255, 180, 0, 0.6),
+        0 0 28px rgba(200, 130, 0, 0.3),
+        inset -5px -5px 14px rgba(0, 0, 0, 0.3),
+        inset 4px 4px 10px rgba(255, 255, 255, 0.2);
+    animation: pulseGlowWhite 4s infinite alternate;
 }
 
-/* توزيع البتلات */
+/* توزيع البتلات 3D */
 .petal:nth-child(1) {
-    transform: rotate(0deg);
+    transform: rotate(-18deg) translateY(-20px) rotateX(25deg) rotateZ(-12deg);
 }
 
 .petal:nth-child(2) {
-    transform: rotate(45deg);
+    transform: rotate(32deg) translateY(-20px) rotateX(25deg) rotateZ(8deg);
 }
 
 .petal:nth-child(3) {
-    transform: rotate(90deg);
+    transform: rotate(72deg) translateY(-20px) rotateX(25deg) rotateZ(22deg);
 }
 
 .petal:nth-child(4) {
-    transform: rotate(135deg);
+    transform: rotate(122deg) translateY(-20px) rotateX(25deg) rotateZ(18deg);
 }
 
 .petal:nth-child(5) {
-    transform: rotate(180deg);
+    transform: rotate(162deg) translateY(-20px) rotateX(25deg) rotateZ(-15deg);
 }
 
 .petal:nth-child(6) {
-    transform: rotate(225deg);
+    transform: rotate(212deg) translateY(-20px) rotateX(25deg) rotateZ(-8deg);
 }
 
 .petal:nth-child(7) {
-    transform: rotate(270deg);
+    transform: rotate(252deg) translateY(-20px) rotateX(25deg) rotateZ(10deg);
 }
 
 .petal:nth-child(8) {
-    transform: rotate(315deg);
+    transform: rotate(302deg) translateY(-20px) rotateX(25deg) rotateZ(15deg);
 }
 
-/* حركات الأنميشن */
+/* الفراشات */
+.butterfly {
+    position: absolute;
+    font-size: 2.2rem;
+    animation: butterflyFly 10s ease-in-out forwards;
+    pointer-events: none;
+    z-index: 2;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* حركات الأنميشن الاحترافية */
+@keyframes cardEntrance {
+    0% {
+        transform: scale(0.5) translateY(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pulse-button {
+
+    0%,
+    100% {
+        box-shadow: 0 10px 25px rgba(255, 81, 0, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 10px 40px rgba(255, 81, 0, 0.6);
+    }
+}
+
 @keyframes growUp {
     0% {
-        transform: translateY(150px) scale(0);
+        transform: translateY(350px) scale(0);
         opacity: 0;
     }
 
@@ -279,32 +519,80 @@ body {
 
 @keyframes swaying {
     0% {
-        transform: rotate(-3deg);
+        transform: rotate(-4deg);
     }
 
     100% {
-        transform: rotate(3deg);
+        transform: rotate(4deg);
     }
 }
 
-@keyframes slowRotate {
+@keyframes rotatePetals {
     0% {
-        transform: rotate(0deg);
+        transform: rotateZ(0deg);
     }
 
     100% {
-        transform: rotate(360deg);
+        transform: rotateZ(360deg);
     }
 }
 
-@keyframes pulseWhiteGlow {
+@keyframes pulseGlowRed {
     0% {
-        box-shadow: 0 0 20px #fff, 0 0 40px #ffffff, 0 0 60px #cbdfff;
-        transform: translate(-50%, -50%) scale(0.9);
+        box-shadow: 0 0 6px rgba(255, 200, 0, 0.7),
+            0 0 14px rgba(255, 153, 0, 0.5),
+            0 0 24px rgba(200, 100, 0, 0.2),
+            inset -4px -4px 12px rgba(0, 0, 0, 0.4),
+            inset 3px 3px 8px rgba(255, 255, 255, 0.15);
+        transform: translate(-50%, -50%) translateZ(8px) scale(0.90);
     }
 
     100% {
-        box-shadow: 0 0 30px #fff, 0 0 60px #ffffff, 0 0 90px #ffffff;
-        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 0 0 10px rgba(255, 200, 0, 0.95),
+            0 0 20px rgba(255, 153, 0, 0.75),
+            0 0 36px rgba(200, 100, 0, 0.4),
+            inset -4px -4px 12px rgba(0, 0, 0, 0.4),
+            inset 3px 3px 8px rgba(255, 255, 255, 0.15);
+        transform: translate(-50%, -50%) translateZ(8px) scale(1.12);
+    }
+}
+
+@keyframes pulseGlowWhite {
+    0% {
+        box-shadow: 0 0 8px rgba(255, 220, 100, 0.7),
+            0 0 16px rgba(255, 180, 0, 0.5),
+            0 0 28px rgba(200, 130, 0, 0.2),
+            inset -5px -5px 14px rgba(0, 0, 0, 0.3),
+            inset 4px 4px 10px rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%) translateZ(10px) scale(0.90);
+    }
+
+    100% {
+        box-shadow: 0 0 12px rgba(255, 220, 100, 0.95),
+            0 0 24px rgba(255, 180, 0, 0.75),
+            0 0 40px rgba(200, 130, 0, 0.4),
+            inset -5px -5px 14px rgba(0, 0, 0, 0.3),
+            inset 4px 4px 10px rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%) translateZ(10px) scale(1.12);
+    }
+}
+
+@keyframes butterflyFly {
+    0% {
+        transform: translateY(0) translateX(0) scale(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-120vh) translateX(180px) scale(1);
+        opacity: 0;
     }
 }
