@@ -1,0 +1,381 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0b0711;
+    background-image: radial-gradient(circle at center, #1b102b 0%, #05020a 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Cairo', sans-serif;
+}
+
+/* كارت المفاجأة */
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 40px 60px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    transition: all 0.5s ease-in-out;
+    animation: cardEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.card h2 {
+    color: #ff9d00;
+    font-size: 1.4rem;
+    margin: 0;
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+}
+
+.card .name {
+    color: #fffb00;
+    font-size: 3.8rem;
+    margin: 10px 0;
+    text-shadow: 0 0 15px rgba(255, 251, 0, 0.6), 0 0 30px rgba(255, 115, 0, 0.5);
+    animation: fadeInUp 0.8s ease-out 0.4s forwards;
+    opacity: 0;
+}
+
+.card .emoji {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    animation: fadeInUp 0.8s ease-out 0.6s forwards, bounce 1.5s ease-in-out 1s infinite;
+    opacity: 0;
+}
+
+.card button {
+    background: linear-gradient(90deg, #ff5100, #ffcc00);
+    border: none;
+    padding: 14px 45px;
+    font-size: 1.2rem;
+    color: #0b0711;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 81, 0, 0.3);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out 0.8s forwards, pulse-button 2s ease-in-out 1.2s infinite;
+    opacity: 0;
+}
+
+.card button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 81, 0, 0.5);
+}
+
+.card button:active {
+    transform: translateY(-1px);
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+#flower-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.title-glow {
+    position: absolute;
+    top: 15%;
+    color: #fffb00;
+    font-size: 3.2rem;
+    text-shadow: 0 0 15px rgba(255, 251, 0, 0.8), 0 0 30px rgba(255, 72, 0, 0.6);
+    z-index: 5;
+    animation: fadeInDown 1s ease-out forwards;
+}
+
+/* زيادة التباعد بين الورود (gap: 65px) لتبتعد عن بعضها */
+.flowers-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 65px;
+    width: 100%;
+    height: 70%;
+    padding-bottom: 20px;
+}
+
+.flower {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-origin: bottom center;
+    opacity: 0;
+    animation: growUp 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+        swaying 4s ease-in-out infinite alternate;
+}
+
+.f1 {
+    animation-delay: 0.6s, 0.6s;
+    transform: scale(0.75);
+}
+
+.f2 {
+    animation-delay: 0.3s, 0.3s;
+    transform: scale(0.9);
+}
+
+.f3 {
+    animation-delay: 0s, 0s;
+    transform: scale(1.25);
+    z-index: 3;
+}
+
+/* الوردة البيضاء الكبرى */
+.f4 {
+    animation-delay: 0.4s, 0.4s;
+    transform: scale(0.95);
+}
+
+.f5 {
+    animation-delay: 0.7s, 0.7s;
+    transform: scale(0.7);
+}
+
+/* السيقان والأوراق */
+.stem {
+    width: 6px;
+    height: 220px;
+    background: linear-gradient(to top, #2b1708, #ff6a00);
+    border-radius: 4px;
+}
+
+.main-stem {
+    height: 290px;
+    width: 8px;
+    background: linear-gradient(to top, #2b1708, #ffffff);
+}
+
+.leaf {
+    position: absolute;
+    width: 25px;
+    height: 12px;
+    background: #ff5100;
+    border-radius: 15px 0;
+    opacity: 0.5;
+}
+
+.leaf.left {
+    left: -22px;
+    top: 50%;
+    transform: rotate(-35deg);
+}
+
+.leaf.right {
+    right: -22px;
+    top: 65%;
+    transform: rotate(35deg) scaleX(-1);
+}
+
+/* رؤوس الزهور */
+.flower-head {
+    position: absolute;
+    top: -35px;
+    width: 70px;
+    height: 70px;
+}
+
+.main-head {
+    top: -45px;
+    width: 90px;
+    height: 90px;
+}
+
+.petals {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    animation: slowRotate 25s linear infinite;
+}
+
+.petal {
+    position: absolute;
+    width: 100%;
+    height: 32%;
+    border-radius: 50%;
+    top: 34%;
+    transform-origin: center center;
+}
+
+/* === التحكم بالألوان وتوحيدها عدا الوسطى بيضاء منورة === */
+
+/* 1. ألوان باقي الورود (البرتقالي الموحد المتوهج) */
+.orange-flower .petal {
+    background: linear-gradient(90deg, rgba(255, 76, 0, 0.85), rgba(255, 174, 0, 0.4));
+    filter: drop-shadow(0 0 6px rgba(255, 81, 0, 0.6));
+}
+
+.orange-flower .center-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #fff, 0 0 35px #ffcc00, 0 0 50px #ff5100;
+}
+
+/* 2. ألوان الوردة الوسطى (بيضاء منورة ومضيئة بالكامل) */
+.white-flower .petal {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 255, 0.5));
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+}
+
+.white-flower .center-glow-white {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 25px #fff, 0 0 50px #ffffff, 0 0 75px #e6f2ff;
+    animation: pulseWhiteGlow 2s infinite alternate;
+}
+
+/* توزيع البتلات */
+.petal:nth-child(1) {
+    transform: rotate(0deg);
+}
+
+.petal:nth-child(2) {
+    transform: rotate(45deg);
+}
+
+.petal:nth-child(3) {
+    transform: rotate(90deg);
+}
+
+.petal:nth-child(4) {
+    transform: rotate(135deg);
+}
+
+.petal:nth-child(5) {
+    transform: rotate(180deg);
+}
+
+.petal:nth-child(6) {
+    transform: rotate(225deg);
+}
+
+.petal:nth-child(7) {
+    transform: rotate(270deg);
+}
+
+.petal:nth-child(8) {
+    transform: rotate(315deg);
+}
+
+/* حركات الأنميشن */
+@keyframes cardEntrance {
+    0% {
+        transform: scale(0.5) translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pulse-button {
+    0%, 100% {
+        box-shadow: 0 10px 25px rgba(255, 81, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 10px 40px rgba(255, 81, 0, 0.6);
+    }
+}
+
+@keyframes growUp {
+    0% {
+        transform: translateY(150px) scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes swaying {
+    0% {
+        transform: rotate(-3deg);
+    }
+
+    100% {
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes slowRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulseWhiteGlow {
+    0% {
+        box-shadow: 0 0 20px #fff, 0 0 40px #ffffff, 0 0 60px #cbdfff;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    100% {
+        box-shadow: 0 0 30px #fff, 0 0 60px #ffffff, 0 0 90px #ffffff;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
