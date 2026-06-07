@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هدية خاصة لـ جنى</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- مشغل يوتيوب مخفي للصوت فقط -->
+    <div id="youtube-audio-player" style="display: none;"></div>
+
+    <!-- الواجهة الأولى: كارت المفاجأة المخصص لـ جنى -->
+    <div id="gift-card" class="card">
+        <h2>هدية خاصة من أجل:</h2>
+        <h1 class="name">جنى</h1>
+        <p class="emoji">❤️🩹</p>
+        <button id="open-btn">🎁 افتح الهدية</button>
+    </div>
+
+    <!-- الواجهة الثانية: الورود المتباعدة باللون الجديد والوردة البيضاء في المنتصف -->
+    <div id="flower-container" class="hidden">
+        <h1 class="title-glow">روحي جنى</h1>
+
+        <div class="flowers-wrapper">
+            <!-- زهرة 1 (يسار - برتقالي متوهج) -->
+            <div class="flower f1 orange-flower">
+                <div class="flower-head">
+                    <div class="center-glow"></div>
+                    <div class="petals">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                    </div>
+                </div>
+                <div class="stem">
+                    <div class="leaf left"></div>
+                    <div class="leaf right"></div>
+                </div>
+            </div>
+
+            <!-- زهرة 2 (وسط يسار - برتقالي متوهج) -->
+            <div class="flower f2 orange-flower">
+                <div class="flower-head">
+                    <div class="center-glow"></div>
+                    <div class="petals">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                    </div>
+                </div>
+                <div class="stem">
+                    <div class="leaf left"></div>
+                </div>
+            </div>
+
+            <!-- زهرة 3 (الرئيسية الكبرى في المنتصف - بيضاء مضيئة ومتوهجة) -->
+            <div class="flower f3 white-flower">
+                <div class="flower-head main-head">
+                    <div class="center-glow-white"></div>
+                    <div class="petals">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                    </div>
+                </div>
+                <div class="stem main-stem">
+                    <div class="leaf left"></div>
+                    <div class="leaf right"></div>
+                </div>
+            </div>
+
+            <!-- زهرة 4 (وسط يمين - برتقالي متوهج) -->
+            <div class="flower f4 orange-flower">
+                <div class="flower-head">
+                    <div class="center-glow"></div>
+                    <div class="petals">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                    </div>
+                </div>
+                <div class="stem">
+                    <div class="leaf right"></div>
+                </div>
+            </div>
+
+            <!-- زهرة 5 (يمين - برتقالي متوهج) -->
+            <div class="flower f5 orange-flower">
+                <div class="flower-head">
+                    <div class="center-glow"></div>
+                    <div class="petals">
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                        <div class="petal"></div>
+                    </div>
+                </div>
+                <div class="stem">
+                    <div class="leaf left"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- تحميل مكتبة الـ API لليوتيوب لاستدعاء الأغنية -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

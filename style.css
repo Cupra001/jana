@@ -22,15 +22,12 @@ body {
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
     z-index: 10;
     transition: all 0.5s ease-in-out;
-    animation: cardEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .card h2 {
     color: #ff9d00;
     font-size: 1.4rem;
     margin: 0;
-    animation: fadeInUp 0.8s ease-out 0.2s forwards;
-    opacity: 0;
 }
 
 .card .name {
@@ -38,15 +35,11 @@ body {
     font-size: 3.8rem;
     margin: 10px 0;
     text-shadow: 0 0 15px rgba(255, 251, 0, 0.6), 0 0 30px rgba(255, 115, 0, 0.5);
-    animation: fadeInUp 0.8s ease-out 0.4s forwards;
-    opacity: 0;
 }
 
 .card .emoji {
     font-size: 2rem;
     margin-bottom: 30px;
-    animation: fadeInUp 0.8s ease-out 0.6s forwards, bounce 1.5s ease-in-out 1s infinite;
-    opacity: 0;
 }
 
 .card button {
@@ -59,18 +52,6 @@ body {
     border-radius: 50px;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(255, 81, 0, 0.3);
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.8s ease-out 0.8s forwards, pulse-button 2s ease-in-out 1.2s infinite;
-    opacity: 0;
-}
-
-.card button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(255, 81, 0, 0.5);
-}
-
-.card button:active {
-    transform: translateY(-1px);
 }
 
 .hidden {
@@ -95,7 +76,6 @@ body {
     font-size: 3.2rem;
     text-shadow: 0 0 15px rgba(255, 251, 0, 0.8), 0 0 30px rgba(255, 72, 0, 0.6);
     z-index: 5;
-    animation: fadeInDown 1s ease-out forwards;
 }
 
 /* زيادة التباعد بين الورود (gap: 65px) لتبتعد عن بعضها */
@@ -285,57 +265,6 @@ body {
 }
 
 /* حركات الأنميشن */
-@keyframes cardEntrance {
-    0% {
-        transform: scale(0.5) translateY(50px);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInUp {
-    0% {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInDown {
-    0% {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-@keyframes pulse-button {
-    0%, 100% {
-        box-shadow: 0 10px 25px rgba(255, 81, 0, 0.3);
-    }
-    50% {
-        box-shadow: 0 10px 40px rgba(255, 81, 0, 0.6);
-    }
-}
-
 @keyframes growUp {
     0% {
         transform: translateY(150px) scale(0);
